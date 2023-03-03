@@ -36,3 +36,34 @@ body {
   min-height: 100vh;
   
 }
+
+.custom-shape-divider-top-1677719465 {
+  overflow: hidden;
+}
+
+.custom-shape-divider-top-1677719465 svg {
+  position: relative;
+  display: block;
+  width: calc(180% + 1.3px);
+  height: 163px;
+}
+
+.custom-shape-divider-top-1677719465 .shape-fill {
+  fill: #ffffff;
+}
+
+.custom-shape-divider-top-1677720024 {  
+  overflow: hidden;
+}
+
+.custom-shape-divider-top-1677720024 svg {  
+  position: relative;
+  display: block;
+  width: calc(180% + 1.3px);
+  height: 163px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1677720024 .shape-fill {
+  fill: #A16207;
+}
