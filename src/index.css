@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *{
   box-sizing: border-box;
 }
@@ -66,4 +65,19 @@ body {
 
 .custom-shape-divider-top-1677720024 .shape-fill {
   fill: #A16207;
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+#mobile {
+  animation: slide-up 0.5s ease-in-out forwards;
 }

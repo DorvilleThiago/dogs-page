@@ -2,6 +2,7 @@ import dog from './assets/golden.png'
 import Dog from './Dog'
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 import Aos from 'aos';
 import 'aos/dist/aos.css'
@@ -10,19 +11,29 @@ function App() {
 
   const [isFoot, setFoot] = useState(window.innerWidth < 1100);
   const [isNav, setNav] = useState(window.innerWidth < 560);
-  const [isBreak, setBreak] = useState(window.innerWidth < 760);
+  const [isBreak, setBreak] = useState(window.innerWidth < 836);
   const [isHamburguer, setHamburguer] = useState(false);
 
-    useEffect(() => {
-      Aos.init()
-    },[])
+  useEffect(() => {
+    Aos.init()
+  },[])
 
+  useEffect(() => {
+    if (!isNav) {
+      
+    } else {
+      setNav(!isNav)
+      setNav(() => {
+        setNav(true)
+      }, 10);
+    }
+  },[isNav])
 
   useEffect(() => {
     function handleResize() {
       setFoot(window.innerWidth < 1100);
       setNav(window.innerWidth < 560);
-      setBreak(window.innerWidth < 760);
+      setBreak(window.innerWidth < 836);
     }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -35,24 +46,26 @@ function App() {
           <i className="fa-solid fa-paw text-yellow-600 text-4xl mr-3 -rotate-12"></i>
         <p className='text-black text-3xl font-bold cursor-default'>Cathioros!</p>
         { !isNav ?
-          <div className='flex flex-row ml-auto mt-2 z-10'>
+          <nav className='flex flex-row ml-auto mt-2 z-10'>
           
             <a onClick={() => window.scrollTo(0, 0)} className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Home</a>
             <a href='#sobre' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Sobre</a>
             <a href='#contato' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Contato</a>
           
-          </div>
+          </nav>
           :
           <div className='ml-auto'>
             <button onClick={() => setHamburguer(!isHamburguer)}><i className="fa-solid fa-bars text-black text-4xl mt-1 cursor-pointer"></i></button>
           </div>
         }
         {
-          isHamburguer && 
-          <div className='h-12 flex justify-center opacity-75 items-center w-full fixed top-24 right-0 bg-white'>
-          <a onClick={() => window.scrollTo(0, 0)} className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Home</a>
+          (isHamburguer && isNav) && 
+          <div id='mobile' className='h-12 w-full fixed top-24 right-0 bg-white shadow-xl'>
+            <nav className='translate-x-2 flex flex-row h-full items-center justify-center'>
+            <a onClick={() => window.scrollTo(0, 0)} className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Home</a>
             <a href='#sobre' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Sobre</a>
             <a href='#contato' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Contato</a>              
+            </nav>
           </div>
         }
 
@@ -60,14 +73,14 @@ function App() {
 
       <div className='h-24'></div>
           
-      <main id='home' className={`flex ${!isBreak ? 'flex-row' : 'flex-col'} justify-center items-center z-20 pl-5 pr-5`}>
+      <main style={{minHeight: '550px'}} id='home' className={`flex ${!isBreak ? 'flex-row' : 'flex-col'} justify-center items-center z-20 pl-5 pr-5`}>
           
-            <div className="flex flex-col">
-              <h1 className='text-yellow-600 font-serif text-3xl cursor-default'>Cathioro que late</h1>
-              <h1 className=' text-yellow-800 font-bold text-5xl cursor-default'>tem fome!</h1>
-              <h1 className='text-black font-black text-7xl cursor default'>Au Au!</h1>
-              <a href="#adotar" className={`bg-yellow-800 cursor-pointer hover:-translate-y-1 transition-all font-black text-white p-1 ${!isBreak ? 'mt-36' : 'mt-5'} mb-4 rounded-xl flex justify-center items-center text-2xl`}><i className="fa-solid fa-bone mr-3
-              "></i>Adote!</a>
+            <div className="flex flex-col items-center">
+          <h1 className={`text-yellow-600 font-serif ${isBreak ? 'text-4xl' : 'text-3xl'} cursor-default `}>Cathioro que late</h1>
+          <h1 className={` text-yellow-800 font-bold ${isBreak ? 'text-5xl' : 'text-6xl'} cursor-default`}>tem fome!</h1>
+              <h1 className={`text-black font-black ${isBreak ? 'text-7xl' : 'text-8xl'} cursor default`}>Au Au!</h1>
+              <motion.a href="#adotar" whileTap={{scale: 0.9}} whileHover={{ scale: 1.05 }} className={`bg-yellow-800 cursor-pointer p-3 will-change-transform pl-6 pr-6 transition-all font-black text-white ${!isBreak ? 'mt-28' : 'mt-5'} mb-4 rounded-xl flex justify-center items-center text-2xl`}><i className="fa-solid fa-bone mr-3
+              "></i>Adote!</motion.a>
             </div>
 
             <img className='ml-5 bg-cover object-cover' src={dog}></img>          
@@ -77,7 +90,7 @@ function App() {
 
       <section style={{minHeight: '700px'}} id='adotar' className="bg-yellow-700 flex flex-col relative">
         
-          <div className="custom-shape-divider-top-1677719465 translate-y- z-0">
+          <div className="custom-shape-divider-top-1677719465 -translate-y-1 z-0">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" className="shape-fill"></path>
                 <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" className="shape-fill"></path>
@@ -101,7 +114,7 @@ function App() {
 
       <section style={{minHeight: '700px'}} id='sobre' className="bg-white rounded-3xl flex flex-col">
         
-          <div className="custom-shape-divider-top-1677720024">
+          <div className="custom-shape-divider-top-1677720024 -translate-y-1">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" className="shape-fill"></path>
                 <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" className="shape-fill"></path>

@@ -1,5 +1,6 @@
 import { Rating } from "@mui/material"
 
+
 export default function Dog(props) {
     return (
         <div style={{minWidth: '288px'}} className="bg-white h-96 w-72 rounded-3xl flex flex-col p-5 hover:-translate-y-3 transition-all">
