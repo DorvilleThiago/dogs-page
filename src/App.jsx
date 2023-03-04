@@ -83,9 +83,10 @@ function App() {
           (isHamburguer && isNav) && 
           <div id='mobile' className='h-12 w-full fixed top-24 right-0 bg-white shadow-xl'>
             <nav className='translate-x-2 flex flex-row h-full items-center justify-center'>
-            <a onClick={() => window.scrollTo(0, 0)} className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Home</a>
-            <a href='#sobre' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Sobre</a>
-            <a href='#contato' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Contato</a>              
+                <a onClick={() => window.scrollTo(0, 0)} className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Home</a>
+                <a href='#adotar' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Adotar</a>
+                <a href='#sobre' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Sobre</a>
+                          
             </nav>
           </div>
         }
