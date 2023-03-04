@@ -1,11 +1,27 @@
-import dog from './assets/golden.png'
+import golden from './assets/golden.png'
 import Dog from './Dog'
-import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 import Aos from 'aos';
 import 'aos/dist/aos.css'
+import { Dialog, Rating } from '@mui/material';
+
+const urls = {
+  mel: 'https://www.shelterluv.com/sites/default/files/animal_pics/11413/2020/12/20/12/20201220122101.png',
+  toby: 'https://www.shelterluv.com/sites/default/files/animal_pics/11413/2022/01/03/10/20220103105130.png',
+  bento: 'https://www.shelterluv.com/sites/default/files/animal_pics/11413/2022/02/28/13/20220228130919.png',
+  luna: 'https://www.milofoundation.org/wp-content/uploads/2020/06/kb_milo_62-scaled-847x1024.jpg',
+  romeu: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEit69WONYofef6gwMt5nxnAEcoLtQ1DX5ilkzSwIt1D4cFcdwuEqZGWl0HaO8A8lbXIIxOsrL7FuD_PNmaSX3RzEd7RVoBgrMccJj36tZ1nm4HYP1TgFl4O7VWYTjo3H5NK6n9i6KS-HmewUf6ic3fL96hL25zC3ugmv2LG1dEFskzsImUOPuGWlB0_/w1200-h630-p-k-no-nu/um-cachorro-chamado-caramelo.JPG'
+}
+
+const historias = {
+  mel: 'Em uma de nossas missões de busca, encontramos uma adorável cadela Golden Retriever que estava perdida em uma floresta. Percebemos que a cadela estava com fome e sede, então oferecemos comida e água para ela. Depois de se alimentar, a cadela se aproximou de nós com confiança, permitindo que colocássemos uma guia nela para levá-la de volta ao abrigo. No abrigo, a cadela recebeu todos os cuidados necessários, incluindo exames veterinários, vacinas e tratamentos contra pulgas e carrapatos. Apesar de não ter nenhuma identificação, ela parecia ser um cachorro muito saudável e bem cuidado antes de se perder.',
+  luna: 'A equipe da "Cathioros" estava em uma de suas missões de resgate quando encontrou uma pequena cadela Yorkshire Terrier perdida nas ruas movimentadas da cidade. A cadela parecia assustada e confusa, tentando evitar os carros e as pessoas ao seu redor. Nos aproximamos com cuidado para não assustá-la ainda mais, e percebemos que ela não tinha nenhuma identificação ou microchip. Decidimos que era nossa responsabilidade ajudá-la a encontrar um novo lar amoroso. Levamos a cadela para o abrigo, onde ela recebeu todos os cuidados necessários, incluindo exames veterinários, vacinas e tratamentos contra pulgas e carrapatos. Apesar de sua aparência suja e maltratada, ficamos impressionados com a personalidade corajosa e animada da cadela. Ela se adaptou rapidamente ao abrigo e parecia estar feliz em estar cercada de pessoas que a amavam e cuidavam dela.',
+  romeu: 'Em uma tarde de domingo, a equipe da "Cathioros" recebeu uma chamada de emergência sobre um cachorro que estava vagando pelas ruas movimentadas da cidade. Quando chegamos ao local, encontramos um cão viralata caramelo andando sem rumo pela calçada, aparentemente perdido e com fome. Percebendo que o cão precisava de ajuda, nos aproximamos com cautela e oferecemos comida e água. Apesar de inicialmente hesitante, o cão rapidamente se aproximou de nós, mostrando uma personalidade doce e amorosa. Levamos o cão para o abrigo, onde ele recebeu todos os cuidados necessários, incluindo exames veterinários, vacinas e tratamentos contra pulgas e carrapatos. Apesar de sua aparência magra e maltratada, o cão tinha uma personalidade incrível e rapidamente se adaptou ao ambiente do abrigo. Começamos uma campanha de adoção para encontrar um novo lar para o cão viralata caramelo. Recebemos várias solicitações de adoção para ele, mas queríamos ter certeza de que ele seria adotado por alguém que pudesse oferecer a ele a atenção e cuidado que ele merecia.',
+  bento: 'Um dia, a equipe da ONG "Cathioros" recebeu uma chamada de emergência sobre um cão Pastor Alemão que havia sido encontrado abandonado na rua. Quando chegamos ao local, encontramos um cão assustado e magro, vagando pela rua sem rumo. Percebendo que o cão precisava de ajuda imediatamente, nos aproximamos com cautela e oferecemos comida e água. O cão estava claramente em estado de choque, mas ainda assim parecia amigável e afetuoso. Levamos o cão para o abrigo, onde ele recebeu todos os cuidados necessários, incluindo exames veterinários, vacinas e tratamentos contra pulgas e carrapatos. Apesar de sua aparência abatida, o cão tinha uma personalidade incrível e um desejo inabalável de encontrar um novo lar.',
+  toby: 'Um dia, enquanto a equipe da "Cathioros" estava fazendo uma campanha de conscientização sobre a adoção de cães, eles encontraram um cachorro abandonado em um beco sem saída. O cachorro estava com medo e parecia estar sozinho há um tempo. A equipe se aproximou do cachorro e o acalmou com carinho. O cachorro era jovem, com pelos curtos e macios, e uma mistura de várias raças. Ele tinha uma energia contagiante e parecia feliz por ter sido encontrado. A equipe de resgate da ONG levou o cachorro para o abrigo, onde ele recebeu cuidados e amor enquanto aguardava uma nova casa. Eles deram a ele o nome de Toby, porque parecia ser um nome divertido e alegre, assim como ele. Toby se tornou um favorito do abrigo, com sua personalidade doce e sua disposição brincalhona. A equipe de resgate fez várias campanhas de adoção para ele, mas infelizmente ninguém parecia estar interessado em adotar um cachorro sem raça definida.'
+}
 
 function App() {
 
@@ -13,6 +29,9 @@ function App() {
   const [isNav, setNav] = useState(window.innerWidth < 560);
   const [isBreak, setBreak] = useState(window.innerWidth < 836);
   const [isHamburguer, setHamburguer] = useState(false);
+  const [dialog, setDialog] = useState(false);
+
+  const [dog, setDog] = useState([null, null, null]);
 
   useEffect(() => {
     Aos.init()
@@ -41,6 +60,7 @@ function App() {
 
   return (
       <>
+      
       <header className="bg-white fixed shadow-xl h-24 -translate-y-5 w-screen flex items-center p-8 pt-12 z-30">
           
           <i className="fa-solid fa-paw text-yellow-600 text-4xl mr-3 -rotate-12"></i>
@@ -49,8 +69,9 @@ function App() {
           <nav className='flex flex-row ml-auto mt-2 z-10'>
           
             <a onClick={() => window.scrollTo(0, 0)} className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Home</a>
+            <a href='#adotar' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Adotar</a>
             <a href='#sobre' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Sobre</a>
-            <a href='#contato' className='text-black text-xl font-bold mr-5 hover:text-yellow-600 transition-all cursor-pointer'>Contato</a>
+            
           
           </nav>
           :
@@ -83,7 +104,7 @@ function App() {
               "></i>Adote!</motion.a>
             </div>
 
-            <img className='ml-5 bg-cover object-cover' src={dog}></img>          
+            <img className='ml-5 bg-cover object-cover' src={golden}></img>          
   
       </main>
       
@@ -101,11 +122,11 @@ function App() {
         <div data-aos="fade-up" data-aos-duration="800" className='pt-16 flex flex-col gap-20 flex-wrap items-center'>
           
             <div className='flex flex-row flex-wrap justify-center gap-10 mb-12'>
-            <Dog name={'Mel'} src="https://www.shelterluv.com/sites/default/files/animal_pics/11413/2020/12/20/12/20201220122101.png"></Dog>
-            <Dog name={'Toby'} src="https://www.shelterluv.com/sites/default/files/animal_pics/11413/2022/01/03/10/20220103105130.png"></Dog>
-            <Dog name={'Bento'} src="https://www.shelterluv.com/sites/default/files/animal_pics/11413/2022/02/28/13/20220228130919.png"></Dog>
-            <Dog name={'Luna'} src="https://www.milofoundation.org/wp-content/uploads/2020/06/kb_milo_62-scaled-847x1024.jpg"></Dog>
-            <Dog name={'Romeu	'} src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEit69WONYofef6gwMt5nxnAEcoLtQ1DX5ilkzSwIt1D4cFcdwuEqZGWl0HaO8A8lbXIIxOsrL7FuD_PNmaSX3RzEd7RVoBgrMccJj36tZ1nm4HYP1TgFl4O7VWYTjo3H5NK6n9i6KS-HmewUf6ic3fL96hL25zC3ugmv2LG1dEFskzsImUOPuGWlB0_/w1200-h630-p-k-no-nu/um-cachorro-chamado-caramelo.JPG"></Dog>
+            <Dog onClick={() => { setDialog(true); setDog(['Mel',urls.mel, historias.mel]) }} name={'Mel'} src={urls.mel}></Dog>
+            <Dog onClick={() => { setDialog(true); setDog(['Toby', urls.toby, historias.toby]) }} name={'Toby'} src={urls.toby}></Dog>
+            <Dog onClick={() => { setDialog(true); setDog(['Bento', urls.bento, historias.bento]) }} name={'Bento'} src={urls.bento}></Dog>
+            <Dog onClick={() => { setDialog(true); setDog(['Luna', urls.luna, historias.luna]) }} name={'Luna'} src={urls.luna}></Dog>
+            <Dog onClick={() => { setDialog(true); setDog(['Romeu', urls.romeu, historias.romeu]) }} name={'Romeu	'} src={urls.romeu}></Dog>
             </div>
             
           </div>
@@ -153,6 +174,20 @@ function App() {
               </div>
             </footer>
 
+            <Dialog
+              open={dialog}
+              onClose={() => setDialog(false)}>
+              <div className='flex flex-col items-center p-8'>
+                  <div>
+                    <img src={dog[1]} className='h-80 w-72 rounded-2xl mb-2 object-cover '></img>
+                    <Rating name="read-only" value={5} readOnly />
+                  </div>
+                <h1 className=' mb-5 font-bold text-3xl'>{dog[0]}</h1>
+                <p className='text-justify'>{dog[2]}</p>
+                <motion.button onClick={() => alert('ERRO... Você não pode adotar um cachorro fictício de uma página fictícia, mas a intenção é o que vale!')} whileTap={{scale: 0.8}} className={`bg-yellow-800 mt-5 w-2/4 cursor-pointer p-3 will-change-transform pl-6 pr-6 transition-all font-black text-white rounded-xl flex justify-center items-center text-2xl`}>Adotar</motion.button>
+              </div>
+            </Dialog>
+
           </span>
 
         </div>
@@ -163,5 +198,6 @@ function App() {
 
   )
 }
+
 
 export default App
